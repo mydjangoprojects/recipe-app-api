@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from core import models
 
 
-def sample_user(email='test@psykesolutions.com', password='testpass'):
+def sample_user(email='test@psykweb.com', password='testpass'):
     """Create a sample user"""
     return get_user_model().objects.create_user(email, password)
 
@@ -17,7 +17,7 @@ class ModuleTests(TestCase):
         """Test creating a new user with an email is successful"""
 
         # Arrange
-        sample_user = {'email': 'test@psykesolutions.com',
+        sample_user = {'email': 'test@psykweb.com',
                        'password': 'Testpass123'}
         # Act
         user = get_user_model().objects.create_user(**sample_user)
@@ -28,7 +28,7 @@ class ModuleTests(TestCase):
     def test_new_user_email_normalized(self):
         """Test the email for a new user is normalized"""
         # Arrange
-        sample_user = {'email': 'test@PSYKESOLUTIONS.COM',
+        sample_user = {'email': 'test@psykweb.COM',
                        'password': 'Testpass123'}
         # Act
         user = get_user_model().objects.create_user(**sample_user)
@@ -43,7 +43,7 @@ class ModuleTests(TestCase):
     def test_create_new_superuser(self):
         """Test creating a new superuser"""
         user = get_user_model().objects.create_superuser(
-            'test@psykesolutions.com',
+            'test@psykweb.com',
             'test123'
         )
 
