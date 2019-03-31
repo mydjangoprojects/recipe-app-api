@@ -65,6 +65,11 @@ and integrate systems more effectively.
 
 See also the list of [contributors](https://github.com/mydjangoprojects/recipe-app-api/graphs/contributors) who participated in this project.
 
+
+## Acknowledgments
+
+* Based on code in course [Build a Backend REST API with Python & Django - Advanced](https://www.udemy.com/django-python-advanced/)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/mydjangoprojects/recipe-app-api/blob/master/LICENSE) file for details
