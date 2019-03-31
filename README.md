@@ -45,6 +45,10 @@ $ cd recipe-app-api
 $ docker-compose build
 ```
 
+## Before Running
+
+If you want to be more secure change every occurrence of __supersecretpassword__ with an encrypted password.
+
 ## Running
 
 ```
