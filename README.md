@@ -53,9 +53,11 @@ $ docker-compose up
 ```
 
 ## Built With
-
+* [Python 3.7.2](https://www.python.org/) - Python is a programming language that lets you work quickly
+and integrate systems more effectively.
 * [Django](https://www.djangoproject.com/) - Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.
 * [Django Rest-Framework](https://www.django-rest-framework.org/) - Django REST framework is a powerful and flexible toolkit for building Web APIs.
+* [PostgreSQL](https://www.postgresql.org/) - PostgreSQL is a powerful, open source object-relational database.
 
 ## Authors
 
