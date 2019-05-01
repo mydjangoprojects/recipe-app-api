@@ -1,19 +1,10 @@
 from rest_framework import generics, authentication, permissions
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.settings import api_settings
 
-from user.serializers import UserSerializer, AuthTokenSerializer
+from rest_auth.registration.views import RegisterView as BaseRegisterView,\
+                                         LoginView as BaseLoginView
 
-
-class CreateUserView(generics.CreateAPIView):
-    """Create a new user in the system"""
-    serializer_class = UserSerializer
-
-
-class CreateTokenView(ObtainAuthToken):
-    """Create a new auth token for user"""
-    serializer_class = AuthTokenSerializer
-    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+from .serializers import UserSerializer
+from core.models import User
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
@@ -25,3 +16,14 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         """Retrieve and return authenticated user"""
         return self.request.user
+
+
+# Rest-Auth Override
+class RegisterView(BaseRegisterView):
+    """Registers a new User in the system"""
+    queryset = User.objects.all()
+
+
+class LoginView(BaseLoginView):
+    """Login with credentials in the system"""
+    queryset = User.objects.all()

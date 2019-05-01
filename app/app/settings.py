@@ -30,19 +30,67 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+]
+
+
+THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_auth.registration',
+]
+
+
+LOCAL_APPS = [
     'core',
     'user',
     'recipe',
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+# Django Rest-Auth's configuration
+# Documentation: https://django-rest-auth.readthedocs.io/
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+OLD_PASSWORD_FIELD_ENABLED = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+AUTH_USER_MODEL = 'core.User'
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'user.serializers.UserSerializer',
+    'LOGIN_SERIALIZER': 'user.serializers.LoginSerializer',
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'user.serializers.RegisterSerializer',
+}
+
+REST_FRAMEWORK = {
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+   ),
+   'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser'
+   ),
+}
+
+# Django Site's Configuration
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -88,7 +136,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -107,6 +154,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+
+AUTHENTICATION_BACKENDS = (
+     # Needed to login by username in Django admin, regardless of `allauth`
+     "django.contrib.auth.backends.ModelBackend",
+
+     # `allauth` specific authentication methods, such as login by e-mail
+     "allauth.account.auth_backends.AuthenticationBackend",
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -128,7 +184,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = '/vol/web/static'
-MEDIA_ROOT = '/vol/web/media'
-
-AUTH_USER_MODEL = 'core.User'
+STATIC_ROOT = os.environ.get('STATIC_ROOT')
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT')

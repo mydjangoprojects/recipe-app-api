@@ -18,8 +18,13 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from user.views import LoginView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/user/', include('user.urls')),
     path('api/recipe/', include('recipe.urls')),
+    path('api/rest-auth/', include('rest_auth.urls')),
+    path('api/rest-auth/login/', LoginView.as_view(), name='rest_login'),
+    path('api/rest-auth/registration/', include('rest_auth.registration.urls'),
+         name='rest_register'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

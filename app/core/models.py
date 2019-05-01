@@ -1,10 +1,11 @@
-import uuid
 import os
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
-                                        PermissionsMixin
+import uuid
 
 from django.conf import settings
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
+    PermissionsMixin
+from django.db import models
+from django.utils.translation import gettext as _
 
 
 def recipe_image_file_path(instance, filename):
@@ -22,6 +23,8 @@ def recipe_image_file_path(instance, filename):
 
 class UserManager(BaseUserManager):
 
+    use_in_migrations = True
+
     def create_user(self, email, password=None, **extra_fields):
         """Creates and saves a new user"""
         # Email validation
@@ -35,10 +38,18 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, password=None):
+    def create_staffuser(self, email, name, password=None, **extra_fields):
+        """Creates and saves a new staff user"""
+
+        user = self.create_user(email, password=password, **extra_fields)
+        user.is_staff = True
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
         """Creates and saves a new super user"""
 
-        user = self.create_user(email, password=password)
+        user = self.create_user(email, password=password, **extra_fields)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -48,14 +59,17 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Custom user model that supports using email instead of username"""
-    email = models.EmailField(max_length=255, unique=True)
+    username = None
+    email = models.EmailField(_('Email Address'), max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    USERNAME_FIELD = 'email'
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    def __str__(self):
+        return self.email
 
 
 class Tag(models.Model):

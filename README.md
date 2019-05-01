@@ -61,6 +61,11 @@ $ docker-compose up
 and integrate systems more effectively.
 * [Django](https://www.djangoproject.com/) - Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.
 * [Django Rest-Framework](https://www.django-rest-framework.org/) - Django REST framework is a powerful and flexible toolkit for building Web APIs.
+    - [Django Rest Auth](https://django-rest-auth.readthedocs.io/en/latest/) - Django REST Auth is giving out of the box things like password reset via e-mail, registration with validation, password reset and many more authentication features out of the box.
+    - [Django All Auth](https://django-allauth.readthedocs.io/en/latest/) - Django All Auth is addition to Django REST Auth which is necessary for the registation partregistration and also gives features like: 
+        - OAuth2 feature to log with many social accounts which are listed on the documentation website.
+        - Supports multiple authentication schemes (e.g. login by user name, or by e-mail), as well as multiple strategies for account verification (ranging from none to e-mail verification).
+        - All access tokens are consistently stored so that you can publish wall updates etc.
 * [PostgreSQL](https://www.postgresql.org/) - PostgreSQL is a powerful, open source object-relational database.
 
 ## Authors
